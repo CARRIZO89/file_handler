@@ -64,27 +64,32 @@ sentiments_per_img.each do |sentiment_img|
     sentiments.each do |sentiment|
         count = sentiment_img[true].count{|x| x[0] == sentiment}
         if count > 0
-           #puts count
-           #puts sentimiento
-           #En este pto ya tenemos todas las respuestas agrupadas x nombres de las imgs. Estoy quiere decir q cada grupo
+           #En este pto ya tenemos todas las respuestas agrupadas x nombres de las imgs. Esto quiere decir q cada grupo
            #tiene el mismo nobre de una imagen pero distintos sentimientos los cuales fueron seleccionados x los usuarios de la APP
            #es x ello q si, la cantidad de resp es maoyor a 0, significa q tiene almenos una respuesta. Entonces, podemos
-           #extraer el nombre de la img de dicha resp haciendo lo siguiente:
-           #puts sentiment_img[true][0][1]
+           #extraer el nombre de la img de dicha resp haciendo lo siguiente: puts sentiment_img[true][0][1]
+
            quantity_sentimentes_per_img << [count, sentiment, sentiment_img[true][0][1]]
         end
     end
-    final_imgs_list << quantity_sentimentes_per_img.max
+    #En este pto ya tenemos la cantidad de veces q una img fue calificada con
+    #un sentimiento en particular. Ahora debemos determinar si hay empate de
+    #sentimientos. Es decir, si cada img fue votada la misma cantidad de veces
+    #para más de un sentimiento. Para ello, determinamos cual es el
+    #sentimiento más votado:
+    max_vote = quantity_sentimentes_per_img.max[0]
+
+    #Ahora buscamos si hay más de un sentimiento con la misma cantidad de veces
+    #votados comparando con el max_vote q determinamos anteriormente
+    repeated_sentiments = quantity_sentimentes_per_img.count{|x| x[0] == max_vote}
+    if repeated_sentiments == 1
+      final_imgs_list << quantity_sentimentes_per_img.max
+    end
 end
-
-
 
 #De esta forma detectamos si hay duplicados. Estoy hay q adaptarlo al código
 #a = [['alegria','img1'],['enojo','img2'],['tristeza','img1'],['alegria','img1'],['enojo','img2'],['alegria','img1']]
 #puts a.find_all { |e| a.count{e[0] == 'zxc'} > 1 }
-
-
-
 
 
 
