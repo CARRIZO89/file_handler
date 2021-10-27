@@ -7,7 +7,7 @@ images_names      = []
 sentiments_per_img = []
 
 ##################### LEEMOS EL CSV #####################
-CSV.foreach('answers.csv') do |row|
+CSV.foreach('answers-27102021.csv') do |row|
   sentiments        << row[1]
   classified_images << [row[1],row[3].split('/').last.inspect]
   images_names      << row[3].split('/').last.inspect
